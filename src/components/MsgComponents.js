@@ -36,14 +36,12 @@ const MsgBox = (props) => {
 }
 const ChatBox = () => {
 	const element = (
-		<div className="flex overflow-x-hidden">
-			<div id="chat" className="w-3/4">
-				<div id="content" className="overflow-y-scroll p-4 custom-scroll-bar"
-					style={{"height": "calc(100vh - 131px)"}}>
-					<MsgBox/>
-				</div>
-				<InputBox/>
+		<div id="chat" className="w-3/4">
+			<div id="content" className="overflow-y-scroll p-4 custom-scroll-bar"
+				style={{"height": "calc(100vh - 131px)"}}>
+				<MsgBox/>
 			</div>
+			<InputBox/>
 		</div>
 	);
 	return element;
