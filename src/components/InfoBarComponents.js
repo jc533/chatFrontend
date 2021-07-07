@@ -1,11 +1,15 @@
 import React from "react";
 import {useState} from "react"
 import {Link} from "react-router-dom";
+import { Transition } from "@headlessui/react";
+import {SearchBox,LeaveBox,AddFriendBox} from "./InfoActionComponents.js";
 
-const NavBar = () => {
+const NavBar = (props) => {
+	const sidebarToggle = () => props.setSideActive(true);
+	const infobarToggle = () => props.setInfoActive(!props.infoActive);
 	const element = (
 		<nav id="navbar" className="flex items-center justify-between py-3 px-5 sticky border-b border-gray-300">
-			<button onclick="sidebarToggle()"
+			<button onClick={sidebarToggle}
 				className="btn-actionbar text-2xl mdi mdi-menu inline-block md:hidden mr-3"></button>
 
 			<div className="flex items-center">
@@ -15,26 +19,34 @@ const NavBar = () => {
 
 			<div>
 				<button className="mdi mdi-phone btn-actionbar mr-5"></button>
-				<button id="infobar-btn" className="mdi mdi-information btn-actionbar text-blue-500" onclick="infobarToggle()"></button>
+				<button id="infobar-btn" className="mdi mdi-information btn-actionbar text-blue-500" onClick={infobarToggle}></button>
 			</div>
 		</nav>
 	);
 	return element;
 }
 const InfoBar = () => {
+	const [action,setAction] = useState("none");
 	const element = (
 		<div id="infobar" class="custom-scroll-bar">
-			<DefaultInfoBar/>
+			<DefaultInfoBar action={action} setAction={setAction}/>
+			<SearchBox action={action} setAction={setAction}/>
+			<LeaveBox action={action} setAction={setAction}/>
+			<AddFriendBox action={action} setAction={setAction}/>
 		</div>);
 	return element;
 }
 const DefaultInfoBar = (props) => {
 	const element = (
+		<Transition show={props.action==='none'}>
 		<div class="absolute w-full">
 			<InfoTitle/>
 			<hr class="border-gray-300"/>
-			<FunctionBox/>
+			<FunctionBox action={props.action} setAction={props.setAction}/>
+			<hr class="border-gray-300"/>
+			<MemberList action={props.action} setAction={props.setAction}/>
 		</div>
+		</Transition>
 	);
 	return element;
 }
@@ -47,10 +59,30 @@ const InfoTitle = () => {
 	);
 	return element;
 }
+const MemberList = (props) => {
+	const friends = ["a","b","c"];
+	const memberEle = friends.map((text,id)=>(
+		<div key={id} class="list-item justify-start">
+			<span class="mdi mdi-account text-gray-600 text-xl"></span>
+			<p class="ml-4">{text}</p>
+		</div>
+	));
+	const element = (
+		<div class="p-2">
+			<h4 class="text-gray-600 pl-2 text-sm mb-2">成員</h4>
+			<button class="list-item justify-start" onClick={()=>props.setAction('addFriend')}>
+				<span class="mdi mdi-account-plus text-blue-500 text-xl"></span>
+				<p class="ml-4">新增成員</p>
+			</button>
+			{memberEle}
+		</div>
+	);
+	return element;
+}
 const FunctionBox = (props) => {
 	const element = (
 		<div class="p-2">
-			<button class="list-item" click="action='search'">
+			<button class="list-item" onClick={()=>props.setAction('search')}>
 				<h4>搜尋對話</h4>
 				<span class="mdi mdi-magnify text-gray-600 text-xl"></span>
 			</button>
@@ -67,7 +99,7 @@ const FunctionBox = (props) => {
 				</div>
 				<span class="mdi mdi-image-multiple text-gray-600 text-xl"></span>
 			</button>
-			<button class="list-item" click="action='leave'">
+			<button class="list-item" onClick={()=>props.setAction('leave')}>
 				<div class="text-left">
 					<h4>退出群組</h4>
 				</div>

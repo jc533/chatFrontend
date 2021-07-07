@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import { Tabs, FriendsTab} from "./TabsComponents.js";
 import {AccountMenu} from "./MenuComponents";
-const SideBar = () => {
+const SideBar = (props) => {
 	const element = (
 		<aside id="sidebar" className="h-screen sidebar overflow-y-scroll custom-scroll-bar sidebar-hide">
 			<div className="sticky bg-white md:bg-gray-200 p-4">
-				<CloseButton />
+				<CloseButton active={props.active} setActive={props.setActive} />
 				<Header />
 			</div>
 			<Tabs />
@@ -17,10 +17,11 @@ const SideBar = () => {
 	return element;
 }
 
-const CloseButton = () => {
+const CloseButton = (props) => {
+	const sidebarToggle = ()=>props.setActive(false);
 	const element = (
 		<div className="mb-5 block md:hidden">
-			<button onclick="sidebarToggle()"
+			<button onClick={sidebarToggle}
 				className="btn-actionbar mdi mdi-close text-2xl mr-3 inline md:hidden"></button>
 		</div>
 

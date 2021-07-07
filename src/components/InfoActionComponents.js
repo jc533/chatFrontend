@@ -1,79 +1,91 @@
 import React from "react";
 import {useState} from "react"
 import {Link} from "react-router-dom";
+import { Transition } from "@headlessui/react";
+import {SearchForm,InfoAddFriendForm} from "./FormComponents.js"
+import ClickAwayListener from 'react-click-away-listener';
 
-const NavBar = () => {
+const SearchBox = (props) => {
 	const element = (
-		<nav id="navbar" className="flex items-center justify-between py-3 px-5 sticky border-b border-gray-300">
-			<button onclick="sidebarToggle()"
-				className="btn-actionbar text-2xl mdi mdi-menu inline-block md:hidden mr-3"></button>
-
-			<div className="flex items-center">
-				<span className="mdi mdi-account-group-outline text-2xl text-blue-500 mr-4"></span>
-				<h4 className="text-lg text-gray-900">群組</h4>
-			</div>
-
-			<div>
-				<button className="mdi mdi-phone btn-actionbar mr-5"></button>
-				<button id="infobar-btn" className="mdi mdi-information btn-actionbar text-blue-500" onclick="infobarToggle()"></button>
-			</div>
-		</nav>
-	);
-	return element;
-}
-const InfoBar = () => {
-	const element = (
-		<div id="infobar" class="custom-scroll-bar">
-			<DefaultInfoBar/>
-		</div>);
-	return element;
-}
-const DefaultInfoBar = (props) => {
-	const element = (
-		<div class="absolute w-full">
-			<InfoTitle/>
-			<hr class="border-gray-300"/>
-			<FunctionBox/>
-		</div>
-	);
-	return element;
-}
-const InfoTitle = () => {
-	const element = (
-		<div class="text-center p-3">
-			<span class="mdi mdi-account-group-outline text-blue-500 text-5xl"></span>
-			<h4 class="text-gray-900 text-xl">群組</h4>
-		</div>
-	);
-	return element;
-}
-const FunctionBox = (props) => {
-	const element = (
-		<div class="p-2">
-			<button class="list-item" click="action='search'">
-				<h4>搜尋對話</h4>
-				<span class="mdi mdi-magnify text-gray-600 text-xl"></span>
-			</button>
-			<button class="list-item">
-				<div class="text-left">
-					<h4>通知</h4>
-					<p class="text-sm text-gray-600">靜音</p>
+		<Transition show={props.action==="search"}
+			enter="transition ease-out duration-200"
+			enterFrom="opacity-0 transform -translate-y-4"
+			enterTo="opacity-100"
+			leave="transition ease-out duraton-200"
+			leaveFrom="opacity-100"
+			leaveTo="opacity-0"
+		>
+			<ClickAwayListener onClickAway={()=>props.setAction("none")}>
+				<div class="w-full absolute">
+					<div class="p-3">
+						<div class="flex items-center">
+							<button class="mdi mdi-arrow-left btn-actionbar" onClick={()=>props.setAction('none')}></button>
+							<p class="ml-4 text-gray-900 text-lg">搜尋</p>
+						</div>
+						<SearchForm action={props.action} setAction={props.setAction}/>
+					</div>
 				</div>
-				<span class="mdi mdi-bell-off-outline text-gray-600 text-xl"></span>
-			</button>
-			<button class="list-item">
-				<div class="text-left">
-					<h4>照片、影片</h4>
+			</ClickAwayListener>
+		</Transition>
+	);
+	return element;
+}
+const LeaveBox = (props) => {
+	const element = (
+		<Transition show={props.action==='leave'}
+			enter="transition ease-out duration-300"
+			enterFrom="opacity-0 transform scale-75"
+			enterTo="opacity-100"
+			leave="transition ease-out duration-300"
+			leaveFrom="opacity-100"
+			leaveTo="opacity-0">
+			<ClickAwayListener onClickAway={()=>props.setAction("none")}>
+				<div class="w-full absolute">
+
+					<div class="p-3">
+						<div class="flex items-center">
+							<button class="mdi mdi-arrow-left btn-actionbar" onClick={()=>props.setAction("none")}></button>
+							<p class="ml-4 text-gray-900 text-lg">退出群組</p>
+						</div>
+
+						<p class="text-gray-600 my-5">
+							你確定要退出？
+						</p>
+
+						<div class="mt-4 grid grid-cols-2 gap-4">
+							<button class="btn btn-secondary" type="reset"
+								onClick={(e)=>{e.preventDefault();props.setAction("none")}}>取消</button>
+							<button type="submit" class="btn btn-danger">退出</button>
+						</div>
+
+					</div>
 				</div>
-				<span class="mdi mdi-image-multiple text-gray-600 text-xl"></span>
-			</button>
-			<button class="list-item" click="action='leave'">
-				<div class="text-left">
-					<h4>退出群組</h4>
+			</ClickAwayListener>
+		</Transition>
+	);
+	return element;
+}
+const AddFriendBox = (props) => {
+	const element = (
+		<Transition show={props.action==='addFriend'}
+			enter="transition ease-out duration-300"
+			enter="opacity-0 transform scale-75"
+			enterFrom="opacity-100"
+			leave="transition ease-out duration-300"
+			leaveFrom="opacity-100"
+			leaveTo="opacity-0">
+			<ClickAwayListener onClickAway={()=>props.setAction('none')}>
+				<div class="w-full absolute">
+					<div class="p-3">
+						<div class="flex items-center">
+							<button class="mdi mdi-arrow-left btn-actionbar" onClick={()=>props.setAction('none')}></button>
+							<p class="ml-4 text-gray-900 text-lg">新增成員</p>
+						</div>
+						<InfoAddFriendForm action={props.action} setAction={props.setAction}/>
+					</div>
 				</div>
-				<span class="mdi mdi-logout text-red-500 text-xl"></span>
-			</button>
-		</div>
+			</ClickAwayListener>
+		</Transition>
 	);
 	return element;
 }
@@ -81,4 +93,5 @@ const FunctionBox = (props) => {
 
 
 
-export {NavBar,InfoBar};
+
+export {SearchBox,LeaveBox,AddFriendBox};

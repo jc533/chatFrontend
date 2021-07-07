@@ -38,7 +38,12 @@ const LoginForm = () => {
 		</div>
 	)
 
-	const element = (<AccountForm type="login" name={name} setName={propSetName} setPassword={propSetPass} password={password} send={send} typeElement={typeElement}/>);
+	const element = (
+		<AccountForm type="login"
+			name={name} setName={propSetName}
+			setPassword={propSetPass} password={password}
+			send={send}
+			typeElement={typeElement}/>);
 	return element;
 }
 const RegisterForm = () => {
@@ -100,7 +105,7 @@ const AccountForm = (props) => {
 }
 const AddFriendsForm = (props) => {
 	const addFriend = (e) => {
-		e.preventDefaulf();
+		e.preventDefault();
 		props.setAction('none');
 	}
 	const element = (
@@ -124,7 +129,7 @@ const AddGroupForm = (props) => {
 
 	const element = (
 		<form action="" onSubmit={addGroup} method="post" className="p-3">
-			<FriendGroupList/>	
+			<FriendGroupList/>
 			<div className="mt-4 grid grid-cols-2 gap-4">
 				<button className="btn btn-secondary" type="reset"
 					onClick={(e)=>{e.preventDefault();props.setAction('none')}}>取消</button>
@@ -134,5 +139,32 @@ const AddGroupForm = (props) => {
 	);
 	return element;
 }
+const SearchForm = (props) => {
+	const element = (
+		<form action="" method="post" class="mt-4">
+			<input type="text" class="custom-input w-full"/>
 
-export {LoginForm,RegisterForm,AddFriendsForm,AddGroupForm};
+			<div class="mt-4 grid grid-cols-2 gap-4">
+				<button class="btn btn-secondary" type="reset"
+					onClick={(e)=>{e.preventDefault();props.setAction("none")}}>取消</button>
+				<button type="submit" class="btn btn-primary">搜尋</button>
+			</div>
+		</form>
+	);
+	return element;
+}
+const InfoAddFriendForm = (props) => {
+	const element = (
+		<form action="" class="my-2">
+			<FriendGroupList/>
+			<div class="mt-4 grid grid-cols-2 gap-4">
+				<button class="btn btn-secondary" type="reset"
+					onClick={()=>props.setAction('none')}>取消</button>
+				<button type="submit" class="btn btn-primary">新增</button>
+			</div>
+		</form>
+	);
+	return element;
+}
+
+export {LoginForm,RegisterForm,AddFriendsForm,AddGroupForm,SearchForm,InfoAddFriendForm};
