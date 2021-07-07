@@ -23,33 +23,4 @@ const Register = () => {
 	return element;
 }
 
-const loginForm = ( <form action="/register" method="post" id="register">
-	<div className="w-full my-4">
-		<label htmlFor="account" className="inline-block mb-2 text-gray-600"><span
-			className="mdi mdi-account-circle"></span> 帳號</label>
-		<input id="account" type="text" className="custom-input w-full" name="user" autoFocus/>
-	</div>
-
-	<div className="w-full my-4">
-		<label htmlFor="password" className="inline-block mb-2 text-gray-600"><span
-			className="mdi mdi-key"></span>
-			密碼</label>
-		<input id="password" type="password" className="custom-input w-full" name="passwd"/>
-	</div>
-
-	<div className="w-full my-4">
-		<label htmlFor="passwordagain" className="inline-block mb-2 text-gray-600"><span
-			className="mdi mdi-key"></span>
-			確認密碼</label>
-		<input id="passwordagain" type="password" className="custom-input w-full" name="passwd_confirm"/>
-	</div>
-	<div className="flex justify-between items-center">
-		<button type="submit" className="btn btn-primary">註冊</button>
-		<div>
-			<p className="mb-0 text-gray-500 inline mr-2">有帳號了?</p>
-			<a href="/login">登入</a>
-		</div>
-		<div id="err_msg"></div>
-	</div>
-</form>);
 export default Register;
