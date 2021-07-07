@@ -34,9 +34,10 @@ const MsgBox = (props) => {
 	return element;
 
 }
-const ChatBox = () => {
+const ChatBox = (props) => {
 	const element = (
-		<div id="chat" className="w-3/4">
+		<div id="chat" 
+			className={`w-3/4 ${props.active ? "" : "infobar-hide-chat"}`}>
 			<div id="content" className="overflow-y-scroll p-4 custom-scroll-bar"
 				style={{"height": "calc(100vh - 131px)"}}>
 				<MsgBox/>

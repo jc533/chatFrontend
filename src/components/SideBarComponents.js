@@ -6,7 +6,7 @@ import { Tabs, FriendsTab} from "./TabsComponents.js";
 import {AccountMenu} from "./MenuComponents";
 const SideBar = (props) => {
 	const element = (
-		<aside id="sidebar" className="h-screen sidebar overflow-y-scroll custom-scroll-bar sidebar-hide">
+		<aside id="sidebar" className={`h-screen sidebar overflow-y-scroll custom-scroll-bar ${props.active ? "sidebar-active" : "sidebar-hide"}`}>
 			<div className="sticky bg-white md:bg-gray-200 p-4">
 				<CloseButton active={props.active} setActive={props.setActive} />
 				<Header />

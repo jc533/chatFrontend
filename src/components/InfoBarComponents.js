@@ -19,16 +19,18 @@ const NavBar = (props) => {
 
 			<div>
 				<button className="mdi mdi-phone btn-actionbar mr-5"></button>
-				<button id="infobar-btn" className="mdi mdi-information btn-actionbar text-blue-500" onClick={infobarToggle}></button>
+				<button id="infobar-btn" className={`mdi ${props.infoActive?"mdi-information":"mdi-information-outline"} btn-actionbar ${props.infoActive?"text-blue-500":"text-gray-600"}`} onClick={infobarToggle}></button>
 			</div>
 		</nav>
 	);
 	return element;
 }
-const InfoBar = () => {
+const InfoBar = (props) => {
 	const [action,setAction] = useState("none");
 	const element = (
-		<div id="infobar" class="custom-scroll-bar">
+		<div id="infobar" className={
+			`custom-scroll-bar 
+			${props.active ? "" : "infobar-hide"}`}>
 			<DefaultInfoBar action={action} setAction={setAction}/>
 			<SearchBox action={action} setAction={setAction}/>
 			<LeaveBox action={action} setAction={setAction}/>

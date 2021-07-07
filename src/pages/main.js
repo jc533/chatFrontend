@@ -10,12 +10,12 @@ const Main = () => {
 	const [sideBarActive,setSideBar] = useState(true);
 	const element = (
 		<main className="h-screen overflow-y-hidden flex">
-			<div id="bg-dark" className="fixed top-0 left-0 w-full h-full bg-dark hidden"></div>
-			<SideBar active={sideBarActive} setActive={sideBarActive}/>
+			<div id="bg-dark" className={`fixed top-0 left-0 w-full h-full bg-dark ${sideBarActive ? "block" : "hidden"}`} onClick={()=>setSideBar(false)}></div>
+			<SideBar active={sideBarActive} setActive={setSideBar}/>
 			<section className="w-full h-screen overflow-y-hidden md:w-3/4 relative">
-				<NavBar sideActive={sideBarActive} setSideActive={sideBarActive} infoActive={infoBarActive} setInfoActive={setInfoBar}/>
+				<NavBar sideActive={sideBarActive} setSideActive={setSideBar} infoActive={infoBarActive} setInfoActive={setInfoBar}/>
 				<div className="flex overflow-x-hidden">
-					<ChatBox/>
+					<ChatBox active={infoBarActive} setActive={setInfoBar}/>
 					<InfoBar active={infoBarActive}/>
 				</div>
 			</section>
