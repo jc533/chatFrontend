@@ -2,13 +2,10 @@ import React from "react";
 import {useState} from "react"
 import {Link} from "react-router-dom";
 import {FriendGroupList} from "./MenuComponents.js";
+import axios from "axios";
 
 const sendData = async (data) => {
-	fetch("http://localhost:8080/login",{
-		method:"POST",
-		mode: 'cors',
-		headers:{'content-type': 'application/json'},
-		body:data}).then((res)=>{console.log(res.json())});
+	axios.post("/")
 }
 const LoginForm = () => {
 	const [name,setName] = React.useState("");
