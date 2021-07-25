@@ -1,16 +1,20 @@
 import React from "react";
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import {Link,Redirect} from "react-router-dom";
 import {InputBox,MsgBox,ChatBox} from "../components/MsgComponents.js";
 import {SideBar} from "../components/SideBarComponents.js";
 import {NavBar,InfoBar} from "../components/InfoBarComponents.js";
-import {useSelector} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
+import {checkLogined} from "../reducers/userSlice.js";
 
 const Main = () => {
 	const [infoBarActive,setInfoBar] = useState(true);
 	const [sideBarActive,setSideBar] = useState(true);
-	const isActive = useSelector(state=>state.user.active)
+	const dispatch = useDispatch();
+	const isActive = window.sessionStorage.getItem("name") //useSelector(state=>state.user.active)
+	dispatch(checkLogined())
 	if(!isActive){
+		alert(isActive)
 		return <Redirect to="/login"/>
 	}
 	const element = (

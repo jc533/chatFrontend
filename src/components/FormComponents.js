@@ -1,23 +1,40 @@
 import React from "react";
 import {useState} from "react"
-import {Link} from "react-router-dom";
+import {Link,Redirect} from "react-router-dom";
 import {FriendGroupList} from "./MenuComponents.js";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {login,logout} from "../reducers/userSlice.js";
 
-const sendData = async (data) => {
-	axios.post("/")
+const sendData = (data) => {
+	console.log("hi")
+	return axios.post("http://localhost:8080/login",data)
 }
 const LoginForm = () => {
 	const [name,setName] = React.useState("");
 	const [password,setPassword] = React.useState("");
 	const propSetName = (x) => setName(x);
 	const propSetPass = (x) => setPassword(x);
-	const send = (e) => {
+	const dispatch = useDispatch();
+	const send = async (e) => {
 		e.preventDefault();
 		setName("");
 		setPassword("");
-		let data = JSON.stringify({"name":name,"password":password})
-		sendData(data);
+		let data = {"name":name,"pwd":password}
+		try{
+			let res = await axios.post("http://localhost:8080/login",data)
+			console.log(res.data)
+			if(res.data.code!=200){
+				console.log("jizzzzzz")
+				console.error(res.data.con)
+			}else{
+				window.sessionStorage.setItem("name", data.name);
+				dispatch(login(name));
+			}
+
+		}catch(e){
+			console.error(e)
+		}
 	}
 	const typeElement = (
 		<div>
@@ -50,16 +67,33 @@ const RegisterForm = () => {
 	const [errMsg,setErrMsg] = React.useState("");
 	const propSetName = (x) => setName(x);
 	const propSetPass = (x) => setPassword(x);
-	const send = (e) => {
+	const dispatch = useDispatch();
+	const send = async (e) => {
 		e.preventDefault();
 		setName("");
 		setPassword("");
-		let data = JSON.stringify({"name":name,"password":password})
-		if(confirmPass == password){
-			sendData(data);
+		setConfirm("");
+		let data = {"name":name,"pwd":password,"passwd":confirmPass};
+		/*if(confirmPass == password){
 		}else{
 			setErrMsg("請輸入正確密碼");
+		}*/
+		try{
+			console.log("hi")
+			let res = await axios.post("http://localhost:8080/register",data)
+			console.log(res)
+			if(res.data.code !== 200){
+				console.error(res.data.con)
+			}else{
+				window.sessionStorage.setItem("name", data.name);
+				dispatch(login(name));
+			}
+
+		}catch(e){
+			console.error(e)
 		}
+
+
 	}
 	const typeElement = (
 		<div>

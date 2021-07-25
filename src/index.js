@@ -4,8 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
-import store from "./store.js"
+import store from "./store.js";
+import {checkLogined} from "./reducers/userSlice.js"; 
 
+store.dispatch(checkLogined())
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
