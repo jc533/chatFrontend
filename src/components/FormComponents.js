@@ -6,9 +6,24 @@ import axios from "axios";
 import {useDispatch} from "react-redux";
 import {login,logout} from "../reducers/userSlice.js";
 
-const sendData = (data) => {
+const sendLogin = async (action,data,dispatch) => {
 	console.log("hi")
-	return axios.post("http://localhost:8080/login",data)
+	try{
+		let res = await axios.post(`http://localhost:8080/${action}`,data)
+		console.log(res.data)
+		let userData = res.data.data
+		if(res.data.code!=200){
+			console.log("jizzzzzz")
+			console.error(res.data.con)
+		}else{
+			window.sessionStorage.setItem("name", data.name);
+			dispatch(login({name:data.name,rooms:userData.rooms}));
+		}
+
+	}catch(e){
+		console.error(e)
+	}
+
 }
 const LoginForm = () => {
 	const [name,setName] = React.useState("");
@@ -16,25 +31,12 @@ const LoginForm = () => {
 	const propSetName = (x) => setName(x);
 	const propSetPass = (x) => setPassword(x);
 	const dispatch = useDispatch();
-	const send = async (e) => {
+	const send = (e) => {
 		e.preventDefault();
 		setName("");
 		setPassword("");
 		let data = {"name":name,"pwd":password}
-		try{
-			let res = await axios.post("http://localhost:8080/login",data)
-			console.log(res.data)
-			if(res.data.code!=200){
-				console.log("jizzzzzz")
-				console.error(res.data.con)
-			}else{
-				window.sessionStorage.setItem("name", data.name);
-				dispatch(login(name));
-			}
-
-		}catch(e){
-			console.error(e)
-		}
+		sendLogin("login",data,dispatch);
 	}
 	const typeElement = (
 		<div>
@@ -68,7 +70,7 @@ const RegisterForm = () => {
 	const propSetName = (x) => setName(x);
 	const propSetPass = (x) => setPassword(x);
 	const dispatch = useDispatch();
-	const send = async (e) => {
+	const send = (e) => {
 		e.preventDefault();
 		setName("");
 		setPassword("");
@@ -78,20 +80,7 @@ const RegisterForm = () => {
 		}else{
 			setErrMsg("請輸入正確密碼");
 		}*/
-		try{
-			console.log("hi")
-			let res = await axios.post("http://localhost:8080/register",data)
-			console.log(res)
-			if(res.data.code !== 200){
-				console.error(res.data.con)
-			}else{
-				window.sessionStorage.setItem("name", data.name);
-				dispatch(login(name));
-			}
-
-		}catch(e){
-			console.error(e)
-		}
+		sendLogin("register",data,dispatch);
 
 
 	}

@@ -11,7 +11,8 @@ const Main = () => {
 	const [infoBarActive,setInfoBar] = useState(true);
 	const [sideBarActive,setSideBar] = useState(true);
 	const dispatch = useDispatch();
-	const isActive = window.sessionStorage.getItem("name") //useSelector(state=>state.user.active)
+	const isActive = useSelector(state=>state.user.active)
+//window.sessionStorage.getItem("name") 
 	dispatch(checkLogined())
 	if(!isActive){
 		alert(isActive)

@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
 	name: "",
+	rooms:[],
 	active: false
 }
 /*export const singIn = createAsyncThunk(
@@ -42,7 +43,7 @@ export const singUp = createAsyncThunk(
 		}
 	}
 )*/
-export const checkLogined = createAsyncThunk(
+/*export const checkLogined = createAsyncThunk(
 	"user/checkLongined",
 	async ()=>{
 		let name = window.sessionStorage.getItem("name");
@@ -53,7 +54,7 @@ export const checkLogined = createAsyncThunk(
 			return {name:null,active:false}
 		}
 	}
-)
+)*/
 
 
 const userSlice = createSlice({
@@ -62,17 +63,31 @@ const userSlice = createSlice({
 	reducers:{
 		login:(state,action)=>{
 			console.log(action.payload)
-			state.name = action.payload;
+			state.name = action.payload.name;
+			state.rooms = action.payload.rooms
 			state.active = true;
 		},
 		logout: (state,action)=>{
 			state.name = null;
 			state.active = false;
-		}
+			state.rooms = [];
+		},
+		checkLogined:(state,action)=>{
+			let name = window.sessionStorage.getItem("name");
+			console.log(name);
+			if(name){
+				state.name=name;
+				state.active=true;
+			}else{
+				state.name = null
+				state.active = false
+			}
 
-	},
-	extraReducers: {
-		/*[singIn.fullfilled]:(state,action)=>{
+
+		},
+	}
+		/*extraReducers: {
+		[singIn.fullfilled]:(state,action)=>{
 			state.active = action.payload.active;
 			state.name = action.payload.active;
 		},
@@ -80,14 +95,14 @@ const userSlice = createSlice({
 			state.active = action.payload.active;
 			state.name = action.payload.active;
 		}*/
-		[checkLogined.fullfilled]:(state,action) => {
+		/*[checkLogined.fullfilled]:(state,action) => {
 			state.active = action.payload.active;
 			state.name = action.payload.name;
 		}
-	}
-})
+	}*/
+	})
 
 
-export const {login,logout} = userSlice.actions;
+export const {login,logout,checkLogined} = userSlice.actions;
 
 export default userSlice.reducer
