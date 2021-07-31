@@ -3,7 +3,9 @@ import axios from "axios";
 
 const initialState = {
 	name: "",
-	rooms:[],
+	rooms: [],
+	messages: [],
+	friends: [],
 	active: false
 }
 /*export const singIn = createAsyncThunk(
