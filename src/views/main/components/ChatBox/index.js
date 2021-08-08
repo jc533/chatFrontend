@@ -18,7 +18,7 @@ const InputBox = () => {
 	return element;
 }
 const MsgBox = () => {
-	const messages = [{id:0,author:user,time:"19:05",text:"jizzzz"}];
+	const messages = [{id:0,author:"user",time:"19:05",text:"jizzzz"}];
 	const element = messages.map(
 			(msg)=>(
 				<Message
@@ -27,7 +27,7 @@ const MsgBox = () => {
 					time={msg.time}
 					text={msg.text}
 				/>))
-	return (<div>{element}</div>;)
+	return (<div>{element}</div>)
 
 }
 const Message = (props) => (

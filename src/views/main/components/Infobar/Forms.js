@@ -19,6 +19,22 @@ const SearchForm = (props) => {
 	);
 	return element;
 }
+const FriendGroupList = () => {
+	const friends = ["a","b"];
+	const element = friends.map((text,id)=>
+		<label key={id} className="list-item custom-checkbox">
+			<div className="flex items-center">
+				<span className="mdi mdi-account text-xl text-gray-600 mr-4"></span>
+				<p className="text-gray-900">{text}</p>
+			</div>
+			<input type="checkbox" name="" id=""/>
+			<span className="custom-checkbox-icon"></span>
+		</label>
+
+
+	);
+	return element;
+}
 const InfoAddFriendForm = (props) => {
 	const element = (
 		<form action="" class="my-2">

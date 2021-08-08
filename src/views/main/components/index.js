@@ -1,5 +1,5 @@
 export {default as ChatBox} from "./ChatBox"
-export {default as Infobar} from "./Infobar"
-export {default} from "./Menu"
+export {default as InfoBar} from "./Infobar"
+export * from "./Menu"
 export {default as NavBar} from "./NavBar"
 export {default as SideBar} from "./Sidebar"

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react"
 import { Link } from "react-router-dom";
 import { Transition } from "@headlessui/react";
-import {AddFriendsForm,AddGroupForm} from "./FormComponents.js";
+import {AddFriendsForm,AddGroupForm} from "./Forms.js";
 import {FriendMenu} from "../Menus.js";
 const ActionBar = (props) => {
 	const element = (

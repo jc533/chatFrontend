@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Redirect, Link, Switch, HashRouter, Route} from "react-router-dom";
 import "./stylesheet/style.css";
 
-import {SingIn,SingUp} from "./views";
+import {SingIn,SingUp,Main} from "./views";
 
 
 export default function Routes(){
@@ -13,6 +13,9 @@ export default function Routes(){
 			</Route>
 			<Route path="/register">
 				<SingUp/>
+			</Route>
+			<Route path="/">
+				<Main/>
 			</Route>
 		</Switch>
 	</Router>);
