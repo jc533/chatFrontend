@@ -1,11 +1,33 @@
 import React from "react";
 import {useState} from "react"
 import {Link,Redirect} from "react-router-dom";
+import {withRouter} from "react-router"
 import axios from "axios";
 import {useDispatch} from "react-redux";
-import {login,logout} from "actions";
+import {sendLogin,sendRegister} from "actions";
 
-const sendLogin = async (action,data,dispatch) => {
+/*const sendLogin = async (data,dispatch,history) => {
+	console.log("jizz")
+	try{
+		let res = await axios.post(`http://localhost:8080/login`,data)
+		let userData = res.data.data
+		console.log(res.data)
+		if(res.data.code!=200){
+			console.log("jizzzzzz")
+			console.error(res.data.con)
+		}else{
+			window.sessionStorage.setItem("name", data.name);
+			dispatch(login({name:data.name,rooms:userData.rooms,friends:userData.friends}));
+			//history.push("/")
+		}
+
+	}catch(e){
+		console.error(e)
+	}
+
+}
+
+const sendRegister = async (action,data,dispatch,history) => {
 	console.log("hi")
 	try{
 		let res = await axios.post(`http://localhost:8080/${action}`,data)
@@ -15,8 +37,8 @@ const sendLogin = async (action,data,dispatch) => {
 			console.log("jizzzzzz")
 			console.error(res.data.con)
 		}else{
-			window.sessionStorage.setItem("name", data.name);
-			dispatch(login({name:data.name,rooms:userData.rooms}));
+			sendLogin(data,dispatch,history)
+
 		}
 
 	}catch(e){
@@ -24,8 +46,8 @@ const sendLogin = async (action,data,dispatch) => {
 	}
 
 }
-
-const RegisterForm = () => {
+*/
+const RegisterForm = (props) => {
 	const [name,setName] = React.useState("");
 	const [password,setPassword] = React.useState("");
 	const [confirmPass,setConfirm] = React.useState("");
@@ -33,6 +55,7 @@ const RegisterForm = () => {
 	const propSetName = (x) => setName(x);
 	const propSetPass = (x) => setPassword(x);
 	const dispatch = useDispatch();
+	const {history} = props;
 	const send = (e) => {
 		e.preventDefault();
 		setName("");
@@ -43,7 +66,7 @@ const RegisterForm = () => {
 		}else{
 			setErrMsg("請輸入正確密碼");
 		}*/
-		sendLogin("register",data,dispatch);
+		sendRegister("register",data,dispatch,history);
 
 
 	}
@@ -87,4 +110,4 @@ const AccountForm = (props) => {
 	return element;
 }
 
-export {RegisterForm};
+export default withRouter(RegisterForm);

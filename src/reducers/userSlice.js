@@ -4,7 +4,6 @@ import axios from "axios";
 const initialState = {
 	name: "",
 	rooms: [],
-	messages: [],
 	friends: [],
 	active: false
 }
@@ -66,13 +65,15 @@ const userSlice = createSlice({
 		login:(state,action)=>{
 			console.log(action.payload)
 			state.name = action.payload.name;
-			state.rooms = action.payload.rooms
+			state.rooms = action.payload.rooms;
+			state.friends = action.payload.friends;
 			state.active = true;
 		},
 		logout: (state,action)=>{
 			state.name = null;
 			state.active = false;
 			state.rooms = [];
+			state.friends = []
 		},
 		checkLogined:(state,action)=>{
 			let name = window.sessionStorage.getItem("name");

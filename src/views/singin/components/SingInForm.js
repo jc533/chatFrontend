@@ -1,11 +1,12 @@
 import React from "react";
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import {Link,Redirect} from "react-router-dom";
 import axios from "axios";
-import {useDispatch} from "react-redux";
-import {login,logout} from "../../../reducers/userSlice.js";
+import {useDispatch,useSelector} from "react-redux";
+import {sendLogin,checkLogined} from "actions";
+import { withRouter } from "react-router";
 
-const sendLogin = async (action,data,dispatch) => {
+/*const sendLogin = async (action,data,dispatch,history) => {
 	console.log("hi")
 	try{
 		let res = await axios.post(`http://localhost:8080/${action}`,data)
@@ -16,27 +17,32 @@ const sendLogin = async (action,data,dispatch) => {
 			console.error(res.data.con)
 		}else{
 			window.sessionStorage.setItem("name", data.name);
-			dispatch(login({name:data.name,rooms:userData.rooms}));
+			dispatch(login({name:data.name,rooms:userData.rooms,friends:userData.friends}));
+			history.push("/");
 		}
 
 	}catch(e){
 		console.error(e)
 	}
 
-}
-const LoginForm = () => {
+}*/
+const LoginForm = (props) => {
 	const [name,setName] = React.useState("");
 	const [password,setPassword] = React.useState("");
 	const propSetName = (x) => setName(x);
 	const propSetPass = (x) => setPassword(x);
+	const isActive = useSelector(state=>state.user.active)
 	const dispatch = useDispatch();
+	const {history} = props;
 	const send = (e) => {
 		e.preventDefault();
 		setName("");
 		setPassword("");
 		let data = {"name":name,"pwd":password}
-		sendLogin("login",data,dispatch);
+		sendLogin("login",data,dispatch,history);
 	}
+	//window.sessionStorage.getItem("name")
+
 	const typeElement = (
 		<div>
 			<label className="w-full my-4 custom-checkbox flex items-center">
@@ -81,4 +87,4 @@ const AccountForm = (props) => {
 	)
 	return element;
 }
-export default LoginForm;
+export default withRouter(LoginForm);

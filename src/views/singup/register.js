@@ -1,7 +1,7 @@
 import {React,useState} from "react";
 import {Link} from "react-router-dom"
 
-import {RegisterForm} from "./components";
+import RegisterForm from "./components";
 
 const Register = () => {
 	const element = (<header className="min-h-screen w-full flex justify-center items-center bg-gray-400 p-5">

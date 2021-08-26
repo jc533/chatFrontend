@@ -1,1 +1,1 @@
-export {RegisterForm} from "./SingUpForm"
+export {default} from "./SingUpForm"
